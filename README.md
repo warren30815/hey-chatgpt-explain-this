@@ -1,10 +1,10 @@
-# hey_chatgpt_what_it_is
+# hey_chatgpt_explain_this
 
 A Chrome extension (manifest v3) that uses ChatGPT to explain highlighted text.
 
 Select unknown sentence, and let's ChatGPT explain to you.
 
-[TODO] demo screenshot
+video: https://www.youtube.com/shorts/p5rwmytf3cA
 
 ## Usage
 1. Visit [openAI website](https://beta.openai.com/account/api-keys) to get API key.
