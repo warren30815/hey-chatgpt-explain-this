@@ -1,0 +1,32 @@
+{
+    "manifest_version": 3,
+    "name": "Hey ChatGPT Explain This",
+    "description": "Highlight unknown sentence, and let's ChatGPT explain to you",
+    "version": "0.0.1",
+    "icons": {
+        "16": "logo/logo-16.png",
+        "48": "logo/logo-48.png",
+        "128": "logo/logo-128.png"
+    },
+    "action": {
+        "default_title": "Explain this",
+        "default_popup": "popup/popup.html"
+    },
+    "permissions": [
+        "storage"
+    ],
+    "host_permissions": [
+        "*://*/*"
+    ],
+    "background": {
+        "service_worker": "service-worker.js"
+    },
+    "content_scripts": [{
+        "js": ["foreground.js"],
+        "matches": ["<all_urls>"]
+    }],
+    "web_accessible_resources": [{
+        "resources": ["popup/*", "logo/*"],
+        "matches": ["<all_urls>"]
+    }]
+}
