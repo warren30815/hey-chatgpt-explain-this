@@ -28,40 +28,6 @@ const closeAll = () => {
   closeContent()
 }
 
-const queryChatGPT = async (selectedText) => {
-  // Replace YOUR_API_KEY with your actual API key from OpenAI
-  let API_KEY = null
-  try {
-    const keyObj = await chrome.storage.local.get('openaiKey')
-    API_KEY = JSON.parse(JSON.stringify(keyObj)).openaiKey
-  } catch (error) {
-    return error
-  }
-  if (!API_KEY) return '[ERROR] Missing API key'
-  // Use the fetch API to call the ChatGPT API
-  try {
-    const response = await fetch('https://api.openai.com/v1/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: 'text-davinci-003',
-        prompt: `Explain this: ${selectedText}`,
-        temperature: 0.5,
-        max_tokens: 1000,
-      }),
-    })
-    const data = await response.json()
-    if (data.choices) return data.choices[0].text
-    else
-      return '[ERROR] ChatGPT failed, please check your API key or use another sentence'
-  } catch (error) {
-    return error
-  }
-}
-
 const getElementPosition = (el) => {
   const rect = el.getBoundingClientRect()
   return {
@@ -108,7 +74,9 @@ document.addEventListener('selectionEnd', (evt) => {
       contentRef.id = contentID
       contentRef.innerHTML = 'Waiting for ChatGPT response...'
       document.body.appendChild(contentRef)
-      const res = await queryChatGPT(selectionText)
+      const res = await chrome.runtime.sendMessage({
+        selectionText,
+      })
       if (contentRef) contentRef.innerHTML = res // the window may be closed before receiving api result
     }
     document.body.appendChild(iconButtonRef)
