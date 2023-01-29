@@ -4,6 +4,10 @@ A Chrome extension (manifest v3) that uses ChatGPT to explain highlighted text.
 
 Select unknown sentence, and let's ChatGPT explain to you.
 
+![](https://gitlab.com/warren30815/hey_chatgpt_explain_this/raw/039fa05f65f078c8610ae29162193449555aacf0/screenshot1.png)
+
+![](https://gitlab.com/warren30815/hey_chatgpt_explain_this/raw/039fa05f65f078c8610ae29162193449555aacf0/screenshot2.png)
+
 video: https://www.youtube.com/shorts/p5rwmytf3cA
 
 ## Usage
