@@ -106,7 +106,7 @@ document.addEventListener('selectionEnd', (evt) => {
       contentRef.innerHTML = 'Waiting for ChatGPT response...'
       document.body.appendChild(contentRef)
       const res = await queryChatGPT(selectionText)
-      contentRef.innerHTML = res
+      if (contentRef) contentRef.innerHTML = res // the window may be closed before receiving api result
     }
     document.body.appendChild(popoverRef)
   }
@@ -116,7 +116,7 @@ document.addEventListener('click', (evt) => {
   else closeAll()
 })
 
-class MouseCoordinateEvent extends Event {
+class CustomEvent extends Event {
   constructor(type, info) {
     super(type)
     this.info = info
@@ -142,11 +142,8 @@ eventList.forEach((eventName) => {
         const info = {
           ...coordinates,
         }
-        const mouseCoordinateEvent = new MouseCoordinateEvent(
-          'selectionEnd',
-          info
-        )
-        document.dispatchEvent(mouseCoordinateEvent)
+        const selectionEndEvent = new CustomEvent('selectionEnd', info)
+        document.dispatchEvent(selectionEndEvent)
       }
     }, 100)
   })
