@@ -4,14 +4,14 @@
     "description": "Highlight unknown sentence, and let's ChatGPT explain to you",
     "version": "0.0.3",
     "icons": {
-        "16": "logo/logo-16.png",
-        "48": "logo/logo-48.png",
-        "128": "logo/logo-128.png"
+        "16": "src/pages/assets/logo-16.png",
+        "48": "src/pages/assets/logo-48.png",
+        "128": "src/pages/assets/logo-128.png"
     },
     "action": {
         "default_title": "Explain this",
-        "default_icon": "logo/logo-16.png",
-        "default_popup": "index.html"
+        "default_icon": "src/pages/assets/logo-16.png",
+        "default_popup": "src/pages/popup/index.html"
     },
     "permissions": [
         "storage",
@@ -21,10 +21,10 @@
         "*://*/*"
     ],
     "background": {
-        "service_worker": "service-worker.js"
+        "service_worker": "src/pages/background/index.js"
     },
     "content_scripts": [{
-        "js": ["foreground.js"],
+        "js": ["src/pages/content/index.js"],
         "matches": ["https://*/*"]
     }]
 }
