@@ -1,4 +1,4 @@
-# hey_chatgpt_explain_this
+# Hey ChatGPT Explain this
 
 A Chrome extension (manifest v3) that uses ChatGPT to explain highlighted text.
 
