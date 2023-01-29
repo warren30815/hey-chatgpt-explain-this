@@ -30,10 +30,13 @@ video: https://www.youtube.com/shorts/p5rwmytf3cA
 [TODO]
 
 ## Roadmap
-[TODO]
+- Vite config
+- security tests (e.g. XSS)
+- linting tools
+- test scripts
 
 ## Contributing
-[TODO] test scripts and linting tools
+[TODO]
 
 ## License
 MIT
