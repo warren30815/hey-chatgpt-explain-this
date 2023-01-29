@@ -99,9 +99,11 @@ document.addEventListener('selectionEnd', (evt) => {
       contentRef.style.padding = '10px'
       contentRef.style.left = `${left}px`
       contentRef.style.top = `${top + height}px`
+      contentRef.style.width = '50vw'
+      contentRef.style.color = 'black'
+      contentRef.style.border = 'solid rgb(187,187,187)'
       contentRef.id = contentID
-      contentRef.innerHTML =
-        '<i class = "fa fa-spinner fa-spin"></i> Wait for ChatGPT response...'
+      contentRef.innerHTML = 'Waiting for ChatGPT response...'
       document.body.appendChild(contentRef)
       const res = await queryChatGPT(selectionText)
       contentRef.innerHTML = res
