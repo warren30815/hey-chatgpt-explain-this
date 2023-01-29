@@ -5,16 +5,16 @@
 // and injected into the same or different pages.
 
 let selectionEndTimeout = null
-let popoverRef = null
+let iconButtonRef = null
 let contentRef = null
 const popoverID = 'popover-button-id'
 const contentID = 'content-window-id'
 const eventList = ['mouseup', 'selectionchange']
 
-const closePopover = () => {
-  if (popoverRef) {
-    document.body.removeChild(popoverRef)
-    popoverRef = null
+const closeIconButton = () => {
+  if (iconButtonRef) {
+    document.body.removeChild(iconButtonRef)
+    iconButtonRef = null
   }
 }
 const closeContent = () => {
@@ -24,7 +24,7 @@ const closeContent = () => {
   }
 }
 const closeAll = () => {
-  closePopover()
+  closeIconButton()
   closeContent()
 }
 
@@ -75,21 +75,21 @@ const getElementPosition = (el) => {
 document.addEventListener('selectionEnd', (evt) => {
   const selectionText = document.getSelection().toString()
   if (selectionText.length > 1) {
-    popoverRef = document.createElement('img')
-    popoverRef.src = chrome.runtime.getURL('logo/logo-48.png')
-    popoverRef.alt = chrome.runtime.getURL('logo/logo-16.png')
-    popoverRef.style.position = 'absolute'
-    popoverRef.style.backgroundColor = 'white'
-    popoverRef.style.height = '24px'
-    popoverRef.style.width = '24px'
-    popoverRef.style.left = `${evt.info.x}px`
-    popoverRef.style.top = `${evt.info.y}px`
-    popoverRef.style.zIndex = '2147483648'
-    popoverRef.id = popoverID
-    popoverRef.onmouseover = () => {
-      popoverRef.style.cursor = 'pointer'
+    iconButtonRef = document.createElement('img')
+    iconButtonRef.src = chrome.runtime.getURL('logo/logo-48.png')
+    iconButtonRef.alt = chrome.runtime.getURL('logo/logo-16.png')
+    iconButtonRef.style.position = 'absolute'
+    iconButtonRef.style.backgroundColor = 'white'
+    iconButtonRef.style.height = '24px'
+    iconButtonRef.style.width = '24px'
+    iconButtonRef.style.left = `${evt.info.x}px`
+    iconButtonRef.style.top = `${evt.info.y}px`
+    iconButtonRef.style.zIndex = '2147483648'
+    iconButtonRef.id = popoverID
+    iconButtonRef.onmouseover = () => {
+      iconButtonRef.style.cursor = 'pointer'
     }
-    popoverRef.onclick = async () => {
+    iconButtonRef.onclick = async () => {
       const { left, top, height } = getElementPosition(
         document.getSelection().getRangeAt(0)
       )
@@ -108,11 +108,12 @@ document.addEventListener('selectionEnd', (evt) => {
       const res = await queryChatGPT(selectionText)
       if (contentRef) contentRef.innerHTML = res // the window may be closed before receiving api result
     }
-    document.body.appendChild(popoverRef)
+    document.body.appendChild(iconButtonRef)
   }
 })
 document.addEventListener('click', (evt) => {
-  if (evt.target.id === contentID || evt.target.id === popoverID) closePopover()
+  const { id } = evt.target
+  if (id === contentID || id === popoverID) closeIconButton()
   else closeAll()
 })
 
