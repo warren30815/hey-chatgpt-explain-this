@@ -4,7 +4,7 @@
 
 // chrome.runtime.onInstalled 為 Extension 第一次被安裝時，執行事件的觸發
 chrome.runtime.onInstalled.addListener(async () => {
-  const url = chrome.runtime.getURL('popup/popup.html')
+  const url = chrome.runtime.getURL('index.html')
   chrome.windows.create({
     url,
     type: 'popup',
