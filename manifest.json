@@ -25,10 +25,6 @@
     },
     "content_scripts": [{
         "js": ["foreground.js"],
-        "matches": ["<all_urls>"]
-    }],
-    "web_accessible_resources": [{
-        "resources": ["popup/*", "logo/*"],
-        "matches": ["<all_urls>"]
+        "matches": ["https://*/*"]
     }]
 }
