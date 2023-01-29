@@ -3,6 +3,6 @@ const saveBtn = document.getElementById('save_btn')
 
 saveBtn.onclick = () => {
   const key = inputField.value
-  chrome.storage.local.set({ openaiKey: key })
+  chrome.storage.session.set({ openaiKey: key })
   window.close()
 }

@@ -17,7 +17,7 @@ const queryChatGPT = async (selectedText) => {
   // Replace YOUR_API_KEY with your actual API key from OpenAI
   let API_KEY = null
   try {
-    const keyObj = await chrome.storage.local.get('openaiKey')
+    const keyObj = await chrome.storage.session.get('openaiKey')
     API_KEY = JSON.parse(JSON.stringify(keyObj)).openaiKey
   } catch (error) {
     return error
