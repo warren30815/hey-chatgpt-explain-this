@@ -8,7 +8,9 @@ Select unknown sentence, and let's ChatGPT explain to you.
 
 ![](https://gitlab.com/warren30815/hey_chatgpt_explain_this/raw/039fa05f65f078c8610ae29162193449555aacf0/screenshot2.png)
 
-video: https://www.youtube.com/shorts/p5rwmytf3cA
+![](https://gitlab.com/warren30815/hey_chatgpt_explain_this/raw/039fa05f65f078c8610ae29162193449555aacf0/screenshot3.png)
+
+video: https://www.youtube.com/watch?v=DuLK3265PXY
 
 ## Usage
 1. Install the extension, and you will see a popup window.
