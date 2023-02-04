@@ -38,6 +38,27 @@ const getElementPosition = (el) => {
   }
 }
 
+const initContentWindow = () => {
+  const { left, top, height } = getElementPosition(
+    document.getSelection().getRangeAt(0)
+  )
+  contentRef = document.createElement('div')
+  contentRef.style.position = 'absolute'
+  contentRef.style.backgroundColor = 'white'
+  contentRef.style.padding = '10px'
+  contentRef.style.left = `${left}px`
+  contentRef.style.top = `${top + height}px`
+  contentRef.style.width = '50vw'
+  contentRef.style.color = 'black'
+  contentRef.style.border = 'solid rgb(187,187,187)'
+  contentRef.id = contentID
+  contentRef.innerHTML = 'Waiting for ChatGPT response...'
+  document.body.appendChild(contentRef)
+}
+const setResponseToWindow = (res) => {
+  if (contentRef) contentRef.innerHTML = res // the window may be closed before receiving api result
+}
+
 document.addEventListener('selectionEnd', (evt) => {
   const selectionText = document.getSelection().toString()
   if (selectionText.length > 1) {
@@ -59,25 +80,11 @@ document.addEventListener('selectionEnd', (evt) => {
       iconButtonRef.style.cursor = 'pointer'
     }
     iconButtonRef.onclick = async () => {
-      const { left, top, height } = getElementPosition(
-        document.getSelection().getRangeAt(0)
-      )
-      contentRef = document.createElement('div')
-      contentRef.style.position = 'absolute'
-      contentRef.style.backgroundColor = 'white'
-      contentRef.style.padding = '10px'
-      contentRef.style.left = `${left}px`
-      contentRef.style.top = `${top + height}px`
-      contentRef.style.width = '50vw'
-      contentRef.style.color = 'black'
-      contentRef.style.border = 'solid rgb(187,187,187)'
-      contentRef.id = contentID
-      contentRef.innerHTML = 'Waiting for ChatGPT response...'
-      document.body.appendChild(contentRef)
+      initContentWindow()
       const res = await chrome.runtime.sendMessage({
         selectionText,
       })
-      if (contentRef) contentRef.innerHTML = res // the window may be closed before receiving api result
+      setResponseToWindow(res)
     }
     document.body.appendChild(iconButtonRef)
   }
@@ -121,3 +128,15 @@ eventList.forEach((eventName) => {
   })
 })
 // [ENDREGION]
+
+chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
+  if (message.action === 'contextMenu') {
+    closeIconButton()
+    const selectionText = document.getSelection().toString()
+    initContentWindow()
+    const res = await chrome.runtime.sendMessage({
+      selectionText,
+    })
+    setResponseToWindow(res)
+  }
+})

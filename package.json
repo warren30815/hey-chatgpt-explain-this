@@ -10,9 +10,7 @@
     "url": "https://gitlab.com/warren30815/hey_chatgpt_explain_this/-/issues"
   },
   "scripts": {
-    "dev": "vite",
-    "build": "vite build && cp -r src/pages/assets dist/src/pages/ && cp manifest.json dist/",
-    "preview": "vite preview"
+    "build": "vite build && cp -r src/pages/assets dist/src/pages/ && cp manifest.json dist/"
   },
   "dependencies": {
     "@types/node": "^18.11.18",

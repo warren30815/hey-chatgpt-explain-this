@@ -47,6 +47,19 @@ const queryChatGPT = async (selectedText) => {
   }
 }
 
+chrome.contextMenus.create({
+  id: 'explain-this',
+  title: 'Explain This',
+  contexts: ['selection'],
+})
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    chrome.tabs.sendMessage(tabs[0].id, {
+      action: 'contextMenu',
+    })
+  })
+})
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   const queryText = JSON.parse(JSON.stringify(message)).selectionText
   queryChatGPT(queryText).then(sendResponse)
