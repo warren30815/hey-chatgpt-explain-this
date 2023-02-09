@@ -15,7 +15,6 @@
     },
     "permissions": [
         "storage",
-        "windows",
         "contextMenus"
     ],
     "host_permissions": [
