@@ -27,8 +27,8 @@ export default ({ mode, command }: { mode: string, command: string }) => {
             },
             rollupOptions: {
                 input: {
-                    content: resolve(pagesDir, 'content', 'index.js'),
-                    background: resolve(pagesDir, 'background', 'index.js'),
+                    content: resolve(pagesDir, 'content', 'index.ts'),
+                    background: resolve(pagesDir, 'background', 'index.ts'),
                     popup: resolve(pagesDir, 'popup', 'index.html'),
                 },
                 output: {
