@@ -33,9 +33,9 @@ video: https://www.youtube.com/watch?v=DuLK3265PXY
 
 ## Roadmap
 - [X] Vite config
-- [ ] JavaScript to TypeScript
+- [X] JavaScript to TypeScript
+- [X] linting tools
 - [ ] security tests (e.g. XSS)
-- [ ] linting tools
 - [ ] test scripts
 
 ## Contributing
