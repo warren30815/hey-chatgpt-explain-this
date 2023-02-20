@@ -30,17 +30,16 @@ const streamAsyncIterable = (stream: ReadableStream, callback: Function) => {
     readStream(reader, callback)
 }
 
-const postToContentScript = (payload: { action: string, mes: string }) => {
-    const { action, mes } = payload
-    chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-        chrome.tabs.sendMessage(tabs[0].id, {
-            action,
-            result: mes,
-        })
+const postToContentScript = (payload: { port: chrome.runtime.Port, action: string, mes: string }) => {
+    const { port, action, mes } = payload
+    port.postMessage({
+        action,
+        portName: port.name,
+        result: mes,
     })
 }
 
-const queryChatGPT = async (selectedText: string) => {
+const queryChatGPT = async (port: chrome.runtime.Port, query: string) => {
     // Replace YOUR_API_KEY with your actual API key from OpenAI
     let API_KEY = null
     try {
@@ -48,6 +47,7 @@ const queryChatGPT = async (selectedText: string) => {
         API_KEY = structuredClone(keyObj).openaiKey
     } catch (error) {
         postToContentScript({
+            port,
             action: 'ans',
             mes: error,
         })
@@ -55,6 +55,7 @@ const queryChatGPT = async (selectedText: string) => {
     }
     if (!API_KEY) {
         postToContentScript({
+            port,
             action: 'ans',
             mes: '[ERROR] Missing API key',
         })
@@ -71,7 +72,7 @@ const queryChatGPT = async (selectedText: string) => {
             },
             body: JSON.stringify({
                 model: 'text-davinci-003',
-                prompt: `Explain this: ${selectedText}`,
+                prompt: `Explain this: ${query}`,
                 temperature: 0.5,
                 max_tokens: 1000,
                 stream: true,
@@ -84,6 +85,7 @@ const queryChatGPT = async (selectedText: string) => {
             if (event.type === 'event') {
                 const message = event.data
                 if (message === '[DONE]') {
+                    port.disconnect()
                     return
                 }
                 let data
@@ -95,11 +97,13 @@ const queryChatGPT = async (selectedText: string) => {
                     }
                     result += text
                     postToContentScript({
+                        port,
                         action: 'ans',
                         mes: result,
                     })
                 } catch (err) {
                     postToContentScript({
+                        port,
                         action: 'ans',
                         mes: err,
                     })
@@ -112,13 +116,32 @@ const queryChatGPT = async (selectedText: string) => {
         })
     } catch (err) {
         postToContentScript({
+            port,
             action: 'ans',
-            mes: err,
+            mes: err.message,
         })
         return err
     }
     return ''
 }
+
+chrome.runtime.onConnect.addListener(port => {
+    if (port.name.startsWith('content-script')) {
+        port.onMessage.addListener(async msg => {
+            try {
+                const query = msg
+                queryChatGPT(port, query)
+            } catch (err: any) {
+                console.error(err)
+                postToContentScript({
+                    port,
+                    action: 'ans',
+                    mes: err.message,
+                })
+            }
+        })
+    }
+})
 
 chrome.contextMenus.create({
     id: 'explain-this',
@@ -126,13 +149,9 @@ chrome.contextMenus.create({
     contexts: ['selection'],
 })
 chrome.contextMenus.onClicked.addListener(() => {
-    postToContentScript({
-        action: 'contextMenu',
-        mes: '',
+    chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+        chrome.tabs.sendMessage(tabs[0].id, {
+            action: 'contextMenu',
+        })
     })
-})
-
-chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
-    const queryText = structuredClone(message).selectionText
-    queryChatGPT(queryText)
 })

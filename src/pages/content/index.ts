@@ -28,6 +28,12 @@ let contentRef: HTMLElement = null
 const popoverID = 'popover-button-id'
 const contentID = 'content-window-id'
 const eventList = ['mouseup', 'selectionchange']
+let port = null as chrome.runtime.Port
+let currentPortName = null as string
+
+const setResponseToWindow = (res: string) => {
+    if (contentRef) contentRef.innerHTML = res // the window may be closed before receiving api result
+}
 
 const closeIconButton = () => {
     if (iconButtonRef) {
@@ -73,13 +79,18 @@ const initContentWindow = () => {
     contentRef.innerHTML = 'Waiting for ChatGPT response...'
     document.body.appendChild(contentRef)
 }
-const setResponseToWindow = (res: string) => {
-    if (contentRef) contentRef.innerHTML = res // the window may be closed before receiving api result
-}
 
 const queryGPT = (text: string) => {
-    chrome.runtime.sendMessage({
-        selectionText: text,
+    const uuid = Math.random().toString(36).substring(2, 15)
+    currentPortName = `content-script-${uuid}`
+    port = chrome.runtime.connect({
+        name: currentPortName,
+    })
+    port.postMessage(text)
+    port.onMessage.addListener(async (message: any) => {
+        if (message.action === 'ans' && message.portName === currentPortName) {
+            setResponseToWindow(message.result)
+        }
     })
 }
 
@@ -145,12 +156,9 @@ eventList.forEach((eventName: string) => {
 
 chrome.runtime.onMessage.addListener(async (message: any) => {
     if (message.action === 'contextMenu') {
-        closeIconButton()
+        closeAll()
         const selectionText = document.getSelection().toString()
         initContentWindow()
         queryGPT(selectionText)
-    }
-    if (message.action === 'ans') {
-        setResponseToWindow(message.result)
     }
 })
