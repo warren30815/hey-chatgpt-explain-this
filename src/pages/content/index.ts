@@ -129,28 +129,27 @@ document.addEventListener('click', (evt: MouseEvent) => {
 })
 
 // [REGION] debounce version of selection event
-eventList.forEach((eventName: string) => {
-    document.addEventListener(eventName, (evt: MouseEvent) => {
-        if (selectionEndTimeout && evt.type === 'selectionchange') {
-            clearTimeout(selectionEndTimeout)
-        }
-        selectionEndTimeout = setTimeout(() => {
-            const noContentWindow = !contentRef
-            const isMouseUp = evt.type === 'mouseup'
-            const haveText = window.getSelection().toString() !== ''
-            if (noContentWindow && isMouseUp && haveText) {
-                const coordinates = {
-                    x: evt.pageX - document.body.scrollLeft,
-                    y: evt.pageY - document.body.scrollTop,
-                }
-                const info = {
-                    ...coordinates,
-                }
-                const selectionEndEvent = new SelectedEvent('selectionEnd', info)
-                document.dispatchEvent(selectionEndEvent)
+document.addEventListener('mouseup', (evt: MouseEvent) => {
+    selectionEndTimeout = setTimeout(() => {
+        const noContentWindow = !contentRef
+        const haveText = window.getSelection().toString() !== ''
+        if (noContentWindow && haveText) {
+            const coordinates = {
+                x: evt.pageX - document.body.scrollLeft,
+                y: evt.pageY - document.body.scrollTop,
             }
-        }, 100)
-    })
+            const info = {
+                ...coordinates,
+            }
+            const selectionEndEvent = new SelectedEvent('selectionEnd', info)
+            document.dispatchEvent(selectionEndEvent)
+        }
+    }, 100)
+})
+document.addEventListener('selectionchange', () => {
+    if (selectionEndTimeout) {
+        clearTimeout(selectionEndTimeout)
+    }
 })
 // [ENDREGION]
 
