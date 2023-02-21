@@ -109,7 +109,7 @@ document.addEventListener('selectionEnd', (evt: SelectedEventInterface) => {
         iconButtonRef.style.width = '24px'
         iconButtonRef.style.left = `${evt.info.x}px`
         iconButtonRef.style.top = `${evt.info.y}px`
-        iconButtonRef.style.zIndex = '2147483648'
+        iconButtonRef.style.zIndex = '2147483647'
         iconButtonRef.id = popoverID
         iconButtonRef.onmouseover = () => {
             iconButtonRef.style.cursor = 'pointer'
