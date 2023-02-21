@@ -10,7 +10,7 @@ Select unknown sentence, and let's ChatGPT explain to you.
 
 ![](https://gitlab.com/warren30815/hey_chatgpt_explain_this/raw/main/screenshot3.png)
 
-video: https://www.youtube.com/watch?v=DuLK3265PXY
+Demo Video: https://www.youtube.com/watch?v=5MAh_BZvF6Q
 
 ## Usage
 1. Install the extension, and you will see a popup window.

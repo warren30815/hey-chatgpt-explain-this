@@ -27,7 +27,6 @@ let iconButtonRef: HTMLImageElement = null
 let contentRef: HTMLElement = null
 const popoverID = 'popover-button-id'
 const contentID = 'content-window-id'
-const eventList = ['mouseup', 'selectionchange']
 let port = null as chrome.runtime.Port
 let currentPortName = null as string
 
