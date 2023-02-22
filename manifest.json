@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Hey ChatGPT Explain This",
     "description": "Highlight unknown sentence, and let's ChatGPT explain to you",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "icons": {
         "16": "src/pages/assets/logo-16.png",
         "48": "src/pages/assets/logo-48.png",
