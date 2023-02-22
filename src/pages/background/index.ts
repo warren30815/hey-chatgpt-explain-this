@@ -74,7 +74,7 @@ const queryChatGPT = async (port: chrome.runtime.Port, query: string) => {
                 model: 'text-davinci-003',
                 prompt: `Explain this: ${query}`,
                 temperature: 0.5,
-                max_tokens: 1000,
+                max_tokens: 100,
                 stream: true,
             }),
         })
