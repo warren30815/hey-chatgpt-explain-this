@@ -71,6 +71,7 @@ const initContentWindow = () => {
     contentRef.style.padding = '10px'
     contentRef.style.left = `${left}px`
     contentRef.style.top = `${top + height}px`
+    contentRef.style.zIndex = '2147483647'
     contentRef.style.width = '50vw'
     contentRef.style.color = 'black'
     contentRef.style.border = 'solid rgb(187,187,187)'
