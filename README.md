@@ -4,11 +4,13 @@ A Chrome extension (manifest v3) that uses ChatGPT to explain highlighted text.
 
 Select unknown sentence, and let's ChatGPT explain to you.
 
-![](https://gitlab.com/warren30815/hey_chatgpt_explain_this/raw/039fa05f65f078c8610ae29162193449555aacf0/screenshot1.png)
+![](https://gitlab.com/warren30815/hey_chatgpt_explain_this/raw/main/screenshot1.png)
 
-![](https://gitlab.com/warren30815/hey_chatgpt_explain_this/raw/039fa05f65f078c8610ae29162193449555aacf0/screenshot2.png)
+![](https://gitlab.com/warren30815/hey_chatgpt_explain_this/raw/main/screenshot2.png)
 
-video: https://www.youtube.com/shorts/p5rwmytf3cA
+![](https://gitlab.com/warren30815/hey_chatgpt_explain_this/raw/main/screenshot3.png)
+
+Demo Video: https://www.youtube.com/watch?v=5MAh_BZvF6Q
 
 ## Usage
 1. Install the extension, and you will see a popup window.
@@ -31,9 +33,9 @@ video: https://www.youtube.com/shorts/p5rwmytf3cA
 
 ## Roadmap
 - [X] Vite config
-- [ ] JavaScript to TypeScript
+- [X] JavaScript to TypeScript
+- [X] ESLint
 - [ ] security tests (e.g. XSS)
-- [ ] linting tools
 - [ ] test scripts
 
 ## Contributing
