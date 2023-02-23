@@ -63,10 +63,11 @@ const queryChatGPT = async (port: chrome.runtime.Port, query: string) => {
     }
     // Use the fetch API to call the ChatGPT API
     const getMaxTokenNum = (_query: string): number => {
-        if (_query.length < 10) return 120 // 90 words
-        if (_query.length < 100) return 240 // 180 words
-        if (_query.length < 1000) return 360 // 270 words
-        return 480
+        const wordCount = _query.split(' ').length
+        if (wordCount < 10) return 60 // 45 words
+        if (wordCount < 100) return 120 // 90 words
+        if (wordCount < 500) return 240 // 180 words
+        return 360 // 270 words
     }
     try {
         let result = ''
