@@ -1,5 +1,7 @@
 # Hey ChatGPT Explain This
 
+Download link: https://chrome.google.com/webstore/detail/hey-chatgpt-explain-this/ncockfahljbgijljglbmmagefbdheofd
+
 A Chrome extension (manifest v3) that uses ChatGPT to explain highlighted text.
 
 Select unknown sentence, and let's ChatGPT explain to you.
