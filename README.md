@@ -37,7 +37,6 @@ Demo Video: https://www.youtube.com/watch?v=5MAh_BZvF6Q
 - [X] Vite config
 - [X] JavaScript to TypeScript
 - [X] ESLint
-- [ ] security tests (e.g. XSS)
 - [ ] test scripts
 
 ## Contributing
